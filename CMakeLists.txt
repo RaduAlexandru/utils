@@ -25,14 +25,14 @@ FetchContent_MakeAvailable( loguru )
 
 
 ###   INCLUDES   #########################################################
-include_directories(${CMAKE_SOURCE_DIR}/include)
+include_directories(include)
 include_directories(${EIGEN3_INCLUDE_DIR})
 include_directories(${loguru_SOURCE_DIR})
 
 
 ###   SOURCES   #################################################################
 set(MY_SRC  
-    ${CMAKE_SOURCE_DIR}/src/ColormapMngr.cxx
+    src/ColormapMngr.cxx
 )
 
 
