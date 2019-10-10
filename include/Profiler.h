@@ -2,12 +2,9 @@
 
 #include <iostream>
 #include <unordered_map>
-#include <thread>
 #include <chrono>
 #include <atomic>
-#include <string>
 #include <vector>
-#include <math.h>
 #include <mutex>
 
 #include "scope_exit.h"
