@@ -16,8 +16,6 @@
 //for formatting when printing the stats
 #include <boost/format.hpp>
 
-
-#define LOGURU_REPLACE_GLOG 1
 #include <loguru.hpp> 
 
 
@@ -54,28 +52,6 @@ struct Stats{ //for each timer we store some stats so we can compute the avg, mi
 };
 
 inline std::ostream& operator<<(std::ostream& os, const Stats& s){
-    // os << "\n";
-    // printf("Follow this command: %s", myString.c_str())
-    //using printf because we can format it nicely
-    // printf("nr_samples: %-5d", s.nr_samples);
-    // printf("min: %-7.2f", s.min);
-    // printf("max: %-7.2f", s.max);
-    // printf("mean: %-7.2f", s.mean);
-    // printf("exp_mean: %-7.2f", s.exp_mean);
-    // printf("variance: %-7.2f", s.variance);
-    // printf("std_dev: %-7.2f", s.std_dev);
-    // printf("\n");
-
-
-    // os << "\t -nr_samples: " << s.nr_samples << " \n";
-    // os << "\t -min: " << s.min << " \n";
-    // os << "\t -max: " << s.max << " \n";
-    // os << "\t -mean: " << s.mean << " \n";
-    // os << "\t -exp_mean: " << s.exp_mean << " \n";
-    // os << "\t -variance: " << s.variance << " \n";
-    // os << "\t -std_dev: " << s.std_dev << " \n";
-
-    // os << boost::format("nr_samples; %1%,  x=%2% : %3%-th try") % "toto" % 40.23 % 50; 
     os << boost::format("mean: %-7.2f") % s.mean; 
     os << boost::format("nr_samples: %-5d") % s.nr_samples; 
     os << boost::format("min: %-7.2f") % s.min; 
@@ -83,8 +59,6 @@ inline std::ostream& operator<<(std::ostream& os, const Stats& s){
     os << boost::format("exp_mean: %-7.2f") % s.exp_mean; 
     os << boost::format("variance: %-7.2f") % s.variance; 
     os << boost::format("std_dev: %-7.2f") % s.std_dev; 
-    // os << boost::format("\n"); 
-
 
     return os;
 }
