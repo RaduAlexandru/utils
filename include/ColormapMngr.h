@@ -1,11 +1,8 @@
 #pragma once 
 
-#include <algorithm>
-
-#include <Eigen/Core>
+#include <Eigen/Geometry>
 
 //most of it is copied from https://github.com/yuki-koyama/tinycolormap/blob/master/include/tinycolormap.hpp
-
 class ColormapMngr{
 public:
     ColormapMngr();

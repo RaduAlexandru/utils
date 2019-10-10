@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <unordered_map>
+#include <math.h>
 #include <chrono>
 #include <atomic>
 #include <vector>
@@ -13,6 +14,10 @@
 //for formatting when printing the stats
 #include <boost/format.hpp>
 
+
+#if defined(PROFILER_IMPLEMENTATION) && !defined(PROFILER_HAS_BEEN_IMPLEMENTED)
+    #define LOGURU_IMPLEMENTATION 1 //if we are implementing profiler we should also implement the loguru becase we need to use it
+#endif
 #include <loguru.hpp> 
 
 
@@ -176,6 +181,7 @@ public:
             //the first time we time a functions it's usualy a warm up so the maximum can be quite big. We ignore this one so as to not squeue our stats
             m_timers[full_name].stop();
             double time_elapsed=m_timers[full_name].elapsed_ms();
+            VLOG(1) << "Time elapsed for " << full_name << " " << time_elapsed;
             m_timings[full_name].push(time_elapsed);
             return; //don't store any stats, because this is the first time we time this function so it's likely to be bad
         }
@@ -299,6 +305,21 @@ static bool is_profiling_gpu(){
     Profiler_ns::sync_gpu();\
     Profiler_ns::Profiler::start_time(name); \
     SCOPE_EXIT{Profiler_ns::sync_gpu(); Profiler_ns::Profiler::stop_time(name);};
+inline float ELAPSED(std::string name){
+    //check if the name is in the timings
+    auto got = Profiler_ns::m_timings.find (name);
+    if ( got == Profiler_ns::m_timings.end() ){
+        LOG(FATAL) << "There are no timings recorded for name " <<name;
+    }
+    float last_timing=got->second.back();
+
+    return last_timing;   
+}
+    
+    // 50;
+    // Profiler_ns::sync_gpu();\
+    Profiler_ns::Profiler::start_time(name); \
+    SCOPE_EXIT{Profiler_ns::sync_gpu(); Profiler_ns::Profiler::stop_time(name);};
 
 
 
@@ -317,6 +338,7 @@ This will define all the Profiler functions so that the linker may find them.
 
 #if defined(PROFILER_IMPLEMENTATION) && !defined(PROFILER_HAS_BEEN_IMPLEMENTED)
 #define PROFILER_HAS_BEEN_IMPLEMENTED
+
 
 //we put it in a namespace so as to not pollute the global namespace
 namespace Profiler_ns{

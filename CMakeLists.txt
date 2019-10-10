@@ -47,9 +47,20 @@ add_library( utils ${MY_SRC} )
 
 ###   LIBS   ###############################################
 set(LIBS ${LIBS} Eigen3::Eigen )
+target_link_libraries(utils ${LIBS} -ldl ) #ldl is for the dladdr function which loguru apperently needs
+
+###   TEST   ###############################################
+add_subdirectory (test)
+enable_testing ()
+add_test (NAME profiler_timing COMMAND profiler_timing)
+#running make test doesnt give any output so we need ctest https://stackoverflow.com/a/49942787 and from https://stackoverflow.com/a/48937782
+add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND}
+    --force-new-ctest-process
+    # --verbose
+    --output-on-failure
+)
 
 
-target_link_libraries(utils ${LIBS} )
 
 
 
