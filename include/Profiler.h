@@ -10,8 +10,8 @@
 #include <math.h>
 #include <mutex>
 
-#include "surfel_renderer/utils/scope_exit.h"
-#include "surfel_renderer/utils/ringbuffer.h"
+#include "scope_exit.h"
+#include "ringbuffer.h"
 
 //for formatting when printing the stats
 #include <boost/format.hpp>
