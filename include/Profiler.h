@@ -316,10 +316,6 @@ inline float ELAPSED(std::string name){
     return last_timing;   
 }
     
-    // 50;
-    // Profiler_ns::sync_gpu();\
-    Profiler_ns::Profiler::start_time(name); \
-    SCOPE_EXIT{Profiler_ns::sync_gpu(); Profiler_ns::Profiler::stop_time(name);};
 
 
 

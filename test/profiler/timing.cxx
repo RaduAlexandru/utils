@@ -72,8 +72,6 @@ int main(int argc, char *argv[]) {
     scope();
 
 
-    //scope
-
     return 0;
 
 }

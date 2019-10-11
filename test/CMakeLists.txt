@@ -14,4 +14,6 @@ set(CMAKE_CXX_STANDARD 17) #needed also by the pybind so it can build itself in 
 ###   EXECUTABLE   #######################################
 add_executable(profiler_timing ${PROJECT_SOURCE_DIR}/profiler/timing.cxx  )
 target_link_libraries(profiler_timing utils )
+add_executable(eigen_filtering ${PROJECT_SOURCE_DIR}/eigen/filtering.cxx  )
+target_link_libraries(eigen_filtering utils )
 

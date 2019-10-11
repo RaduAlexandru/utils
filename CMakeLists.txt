@@ -53,6 +53,7 @@ target_link_libraries(utils ${LIBS} -ldl ) #ldl is for the dladdr function which
 add_subdirectory (test)
 enable_testing ()
 add_test (NAME profiler_timing COMMAND profiler_timing)
+add_test (NAME eigen_filtering COMMAND eigen_filtering)
 #running make test doesnt give any output so we need ctest https://stackoverflow.com/a/49942787 and from https://stackoverflow.com/a/48937782
 add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND}
     --force-new-ctest-process

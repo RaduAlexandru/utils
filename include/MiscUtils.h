@@ -79,7 +79,7 @@ typedef std::vector<row_type_i> matrix_type_i;
 typedef std::vector<bool> row_type_b;
 typedef std::vector<row_type_b> matrix_type_b;
 
-namespace er{
+namespace easy_pbr{
 namespace utils{
 
 // Converts degrees to radians.
