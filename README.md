@@ -41,6 +41,19 @@ There is a very limited set of tests in the `tests/` folder.
 
 # Stand-alone libraries
 
+#### ColorMngr.h
+Convenience functions for using colormaps and also generating random colors based on tinycolormap. Supports colormaps: 
+
+| Name     | Sample                         |
+|:--------:|:------------------------------:|
+| Magma    | ![](https://github.com/yuki-koyama/tinycolormap/raw/master/docs/samples/Magma.png)    |
+| Plasma   | ![](https://github.com/yuki-koyama/tinycolormap/raw/master/docs/samples/Plasma.png)   |
+| Viridis  | ![](https://github.com/yuki-koyama/tinycolormap/raw/master/docs/samples/Viridis.png)  |
+
+    ColorMngr color_mngr;
+    Eigen::Vector3f color=color_mngr.plasma_color(0.1); 
+    Eigen::MatrixXf colormap = color_mngr.viridis_colormap(); //matrix of 256x3
+
 #### Profiler.h 
 Allows for easy profiling of code with high precision timers: 
 
@@ -58,6 +71,14 @@ Allows for easy profiling of code with high precision timers:
     
     float millisecond=ELAPSED("mytime)
     PROFILER_PRINT(); // print mean, std_dev, min and max of all the timings recorded until now
+
+#### RandGenerator.h
+High quality random number generator which abstracts away some of the verbosity of the standard library. Example: 
+
+    RandGenerator gen;
+    float rand_uniform = gen.rand_float(0.0, 10.0); //random uniform number between 0 and 10
+    float rand_normal = gen.rand_normal_float(0.0, 0.1); // normal with mean and std_dev
+    bool coin = gen.rand_bool(0.5); //0.5 probability of true
     
 #### eigen_utils.h
 Useful functions to have for manipulating Eigen matrices (removing rows, columns, reindexing, etc). They are particularly useful for processing meshes which are represented as matrices of vertices V and faces F. Easy_PBR heavily uses this library for aiding geometry processing. 
@@ -70,14 +91,6 @@ Usefult functions manipulating string which includes but is not limited to:
 
 #### opencv_utils.h
 Convenience functions for OpenCV images
-    
-#### RandGenerator.h
-High quality random number generator which abstracts away some of the verbosity of the standard library. Example: 
-
-    RandGenerator gen;
-    float rand_uniform = gen.rand_float(0.0, 10.0); //random uniform number between 0 and 10
-    float rand_normal = gen.rand_normal_float(0.0, 0.1); // normal with mean and std_dev
-    bool coin = gen.rand_bool(0.5); //0.5 probability of true
     
 #### numerical_utils.h
 Various numerical functions for:
@@ -92,16 +105,4 @@ General purpose, single threaded ringbuffer:
     ring.push(30);
     ring.push(10); 
     std::cout << "Last element added is " << ring.back(); //prints 10
-
-#### ColorMngr.h
-Convenience functions for using colormaps and also generating random colors based on tinycolormap. Supports colormaps: 
-
-| Name     | Sample                         |
-|:--------:|:------------------------------:|
-| Magma    | ![](https://github.com/yuki-koyama/tinycolormap/raw/master/docs/samples/Magma.png)    |
-| Plasma   | ![](https://github.com/yuki-koyama/tinycolormap/raw/master/docs/samples/Plasma.png)   |
-| Viridis  | ![](https://github.com/yuki-koyama/tinycolormap/raw/master/docs/samples/Viridis.png)  |
-
-    ColorMngr color_mngr;
-    Eigen::Vector3f color=color_mngr.plasma_color(0.1); 
-    Eigen::MatrixXf colormap = color_mngr.viridis_colormap(); //matrix of 256x3 
+ 
