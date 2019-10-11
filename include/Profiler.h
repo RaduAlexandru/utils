@@ -9,7 +9,7 @@
 #include <mutex>
 
 #include "scope_exit.h"
-#include "ringbuffer.h"
+#include "Ringbuffer.h"
 
 //for formatting when printing the stats
 #include <boost/format.hpp>

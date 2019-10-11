@@ -1,10 +1,54 @@
-#include "ColormapMngr.h"
+#pragma once
 
-ColormapMngr::ColormapMngr(){
+#include <random>
+
+#include <Eigen/Geometry>
+
+class RandGenerator;
+
+//most of it is copied from https://github.com/yuki-koyama/tinycolormap/blob/master/include/tinycolormap.hpp
+class ColormapMngr{
+public:
+
+    Eigen::Vector3f magma_color(const float x){
+        float x_clamped = std::max(0.0f, std::min(1.0f, x));
+        return m_magma_colormap.row(static_cast<size_t>(std::round(x_clamped * 255.0)));
+    }
+
+    Eigen::MatrixXf magma_colormap(){
+        return m_magma_colormap;
+    }
+
+    Eigen::Vector3f plasma_color(const float x){
+        float x_clamped = std::max(0.0f, std::min(1.0f, x));
+        return m_plasma_colormap.row(static_cast<size_t>(std::round(x_clamped * 255.0)));
+    }
+
+    Eigen::MatrixXf plasma_colormap(){
+        return m_plasma_colormap;
+    }
+
+    Eigen::Vector3f viridis_color(const float x){
+        float x_clamped = std::max(0.0f, std::min(1.0f, x));
+        return m_viridis_colormap.row(static_cast<size_t>(std::round(x_clamped * 255.0)));
+    }
+
+    Eigen::MatrixXf viridis_colormap(){
+        return m_viridis_colormap;
+    }
+
+    Eigen::Vector3d random_color(std::shared_ptr<RandGenerator> rand_gen) {
+        Eigen::Vector3d color;
+        color(0) = rand_gen->rand_float(0.0, 1.0);
+        color(1) = rand_gen->rand_float(0.0, 1.0);
+        color(2) = rand_gen->rand_float(0.0, 1.0);
+        return color;
+    }
 
 
-    m_magma_colormap.resize(256,3);
-    m_magma_colormap <<
+    ColormapMngr(){
+        m_magma_colormap.resize(256,3);
+        m_magma_colormap <<
              0.001462, 0.000466, 0.013866 ,
              0.002258, 0.001295, 0.018331 ,
              0.003279, 0.002305, 0.023708 ,
@@ -782,31 +826,11 @@ ColormapMngr::ColormapMngr(){
              0.983868, 0.904867, 0.136897 ,
              0.993248, 0.906157, 0.143936 
         ;
-}
+    }
 
-Eigen::Vector3f ColormapMngr::magma_color(const float x){
-    float x_clamped = std::max(0.0f, std::min(1.0f, x));
-    return m_magma_colormap.row(static_cast<size_t>(std::round(x_clamped * 255.0)));
-}
+private:
+    Eigen::MatrixXf m_magma_colormap;
+    Eigen::MatrixXf m_plasma_colormap;
+    Eigen::MatrixXf m_viridis_colormap;
 
-Eigen::MatrixXf ColormapMngr::magma_colormap(){
-    return m_magma_colormap;
-}
-
-Eigen::Vector3f ColormapMngr::plasma_color(const float x){
-    float x_clamped = std::max(0.0f, std::min(1.0f, x));
-    return m_plasma_colormap.row(static_cast<size_t>(std::round(x_clamped * 255.0)));
-}
-
-Eigen::MatrixXf ColormapMngr::plasma_colormap(){
-    return m_plasma_colormap;
-}
-
-Eigen::Vector3f ColormapMngr::viridis_color(const float x){
-    float x_clamped = std::max(0.0f, std::min(1.0f, x));
-    return m_viridis_colormap.row(static_cast<size_t>(std::round(x_clamped * 255.0)));
-}
-
-Eigen::MatrixXf ColormapMngr::viridis_colormap(){
-    return m_viridis_colormap;
-}
+};

@@ -1,5 +1,7 @@
 #define LOGURU_IMPLEMENTATION 1
-#include "MiscUtils.h"
+#include "eigen_utils.h"
+
+#include <numeric> //std::iota
 
 using namespace easy_pbr::utils;
 

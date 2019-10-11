@@ -31,12 +31,12 @@ include_directories(${loguru_SOURCE_DIR})
 
 
 ###   SOURCES   #################################################################
-set(MY_SRC  
-    src/ColormapMngr.cxx
-)
+# set(MY_SRC  
+    # src/ColormapMngr.cxx
+# )
 
 
-add_library( utils ${MY_SRC} )
+# add_library( utils ${MY_SRC} )
 
 
 ###   EXECUTABLE   #######################################
@@ -46,8 +46,8 @@ add_library( utils ${MY_SRC} )
 
 
 ###   LIBS   ###############################################
-set(LIBS ${LIBS} Eigen3::Eigen )
-target_link_libraries(utils ${LIBS} -ldl ) #ldl is for the dladdr function which loguru apperently needs
+# set(LIBS ${LIBS} Eigen3::Eigen )
+# target_link_libraries(utils ${LIBS} -ldl ) #ldl is for the dladdr function which loguru apperently needs
 
 ###   TEST   ###############################################
 add_subdirectory (test)
