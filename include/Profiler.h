@@ -305,6 +305,8 @@ static bool is_profiling_gpu(){
     Profiler_ns::sync_gpu();\
     Profiler_ns::Profiler::start_time(name); \
     SCOPE_EXIT{Profiler_ns::sync_gpu(); Profiler_ns::Profiler::stop_time(name);};
+#define PROFILER_PRINT()\
+    Profiler_ns::Profiler::print_all_stats();
 inline float ELAPSED(std::string name){
     //check if the name is in the timings
     auto got = Profiler_ns::m_timings.find (name);

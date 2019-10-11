@@ -41,6 +41,8 @@ void start_pause_stop(){
     sleep_millisec(duration_part2);
     TIME_END("test2");
 
+    PROFILER_PRINT();
+
     //estimated should be the sum of the two regions that were timed
     float estimated=ELAPSED("test2");
     float error=std::fabs(estimated-duration_part1-duration_part2);
