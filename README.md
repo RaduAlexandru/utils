@@ -27,7 +27,7 @@ If you have CMake >=3.14 you can obtain all the utils by adding to your CMakeLis
 If you have an older version of CMake (<3.14) you can also add the utilities as a git submodule:
 
     git submodule add https://github.com/RaduAlexandru/utils.git extern/utils
-and compiling and linking in your CMakeLists.txt: 
+and adding to your CMakeLists.txt: 
 
     add_subdirectory (utils)
     include_directories(extern/utils/include)
@@ -41,7 +41,7 @@ There is a very limited set of tests in the `tests/` folder.
 
 # Stand-alone libraries
 
-#### profiler.h 
+#### Profiler.h 
 Allows for easy profiling of code with high precision timers: 
 
     #define PROFILER_IMPLEMENTATION 1
