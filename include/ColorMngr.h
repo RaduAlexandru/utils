@@ -4,10 +4,19 @@
 
 #include <Eigen/Geometry>
 
-class RandGenerator;
+#include "RandGenerator.h"
+
+
+inline Eigen::Vector3d random_color(std::shared_ptr<RandGenerator> rand_gen) {
+    Eigen::Vector3d color;
+    color(0) = rand_gen->rand_float(0.0, 1.0);
+    color(1) = rand_gen->rand_float(0.0, 1.0);
+    color(2) = rand_gen->rand_float(0.0, 1.0);
+    return color;
+}
 
 //most of it is copied from https://github.com/yuki-koyama/tinycolormap/blob/master/include/tinycolormap.hpp
-class ColormapMngr{
+class ColorMngr{
 public:
 
     Eigen::Vector3f magma_color(const float x){
@@ -37,16 +46,7 @@ public:
         return m_viridis_colormap;
     }
 
-    Eigen::Vector3d random_color(std::shared_ptr<RandGenerator> rand_gen) {
-        Eigen::Vector3d color;
-        color(0) = rand_gen->rand_float(0.0, 1.0);
-        color(1) = rand_gen->rand_float(0.0, 1.0);
-        color(2) = rand_gen->rand_float(0.0, 1.0);
-        return color;
-    }
-
-
-    ColormapMngr(){
+    ColorMngr(){
         m_magma_colormap.resize(256,3);
         m_magma_colormap <<
              0.001462, 0.000466, 0.013866 ,
