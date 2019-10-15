@@ -181,7 +181,7 @@ public:
             //the first time we time a functions it's usualy a warm up so the maximum can be quite big. We ignore this one so as to not squeue our stats
             m_timers[full_name].stop();
             double time_elapsed=m_timers[full_name].elapsed_ms();
-            VLOG(1) << "Time elapsed for " << full_name << " " << time_elapsed;
+            // VLOG(1) << "Time elapsed for " << full_name << " " << time_elapsed;
             m_timings[full_name].push(time_elapsed);
             return; //don't store any stats, because this is the first time we time this function so it's likely to be bad
         }
