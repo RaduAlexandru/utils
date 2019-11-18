@@ -7,9 +7,9 @@
 // https://kristerw.blogspot.com/2017/05/seeding-stdmt19937-random-number-engine.html
 class RandGenerator{
 public:
-    RandGenerator(): 
+    RandGenerator(unsigned int seed=0): 
         // m_gen((std::random_device())()) //https://stackoverflow.com/a/29580889
-        m_gen(0) //start with a defined seed
+        m_gen(seed) //start with a defined seed
         {
 
     }
