@@ -282,9 +282,9 @@ inline void sync_gpu(){
         #endif
     }
 }
-static bool is_profiling_gpu(){
-    return m_profile_gpu;
-}
+// static bool is_profiling_gpu(){
+    // return m_profile_gpu;
+// }
 
 } //namespace Profiler_ns
 

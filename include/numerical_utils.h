@@ -225,7 +225,7 @@ inline char reVal(int num) {
 //go from decimat base to any other base and returns the digit of that base as a std vector. Based on https://www.geeksforgeeks.org/convert-base-decimal-vice-versa/
 //useful for creating uniform boxel grids in any dimension where vertices are defined as (0,0), (0,1), (1,0), (1,1) etc. Look at misc_utils/PermutoLatticePlotter for details
 inline std::vector<int> convert_decimal_to_base(const int num, const int base) { 
-    int index = 0;  // Initialize index of result 
+    // int index = 0;  // Initialize index of result 
 
     int val=num;
     std::vector<int> digits;
