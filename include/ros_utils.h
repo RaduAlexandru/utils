@@ -7,7 +7,7 @@
 #include <Eigen/Core>
 #include <Eigen/Geometry>
 
-#include "StringTools.h"
+// #include "StringTools.h"
 #include <iostream>
 
 template <typename T>
@@ -20,7 +20,7 @@ T getParamElseError ( ros::NodeHandle & nh, const std::string & paramName )
       ROS_ERROR_STREAM( "Parameter " << paramName << " could not be retrieved." );
    }
 
-   ROS_INFO_STREAM ( paramName << ": " << to_string ( out ) );
+   ROS_INFO_STREAM ( paramName << ": " << std::to_string ( out ) );
 
    return out;
 }
@@ -36,7 +36,7 @@ T getParamElseThrow( ros::NodeHandle & nh, const std::string & paramName )
     throw std::string("Parameter " + paramName + " could not be retrieved." );
   }
 
-  ROS_INFO_STREAM( paramName << ": " << to_string( out ) );
+  ROS_INFO_STREAM( paramName << ": " << std::to_string( out ) );
   return out;
 }
 
@@ -51,21 +51,10 @@ T getParamElseDefault( ros::NodeHandle & nh, const std::string & paramName, cons
     return def;
   };
 
-  ROS_INFO_STREAM( paramName << ": " << to_string( out ) );
+  ROS_INFO_STREAM( paramName << ": " << std::to_string( out ) );
 
   return out;
 }
-
-void addCamPoseToMarkers (visualization_msgs::Marker * markers,
-                          const Eigen::Isometry3d & camPose_cw,
-                          const double camSizeInM, const Eigen::Isometry3d & T_vo = Eigen::Isometry3d::Identity());
-
-void addTagPoseToMarkers (visualization_msgs::Marker * markers,
-                          const Eigen::Isometry3d & tagPose_wt, const double tagSize, const Eigen::Isometry3d & T_vo = Eigen::Isometry3d::Identity());
-
-geometry_msgs::Point convertToGeomMsgPoint( const Eigen::Vector3d & point );
-
-Eigen::Vector3d convertToEigenVec (const geometry_msgs::Point & msgs_point);
 
 template <typename T>
 void getSingleMsgFromTopic( T * msg, const std::string & topicName, ros::NodeHandle & nh = ros::NodeHandle(),  const int freq = 20 )
