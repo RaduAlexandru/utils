@@ -7,8 +7,8 @@
 #include "RandGenerator.h"
 
 
-#define min_f(a, b, c)  (fminf(a, fminf(b, c)))
-#define max_f(a, b, c) (fmaxf(a, fmaxf(b, c)))
+#define min_three(a, b, c)  (std::min(a, std::min(b, c)))
+#define max_three(a, b, c) (std::max(a, std::max(b, c)))
 
 inline Eigen::Vector3d random_color(std::shared_ptr<RandGenerator> rand_gen) {
     Eigen::Vector3d color;
@@ -30,8 +30,8 @@ inline Eigen::Vector3d rgb2hsv(const Eigen::Vector3d& rgb){
 
     float h, s, v; // h:0-360.0, s:0.0-1.0, v:0.0-1.0
 
-    float max = max_f(r, g, b);
-    float min = min_f(r, g, b);
+    float max = max_three(r, g, b);
+    float min = min_three(r, g, b);
 
     v = max;
 
