@@ -7,6 +7,9 @@
 #include "RandGenerator.h"
 
 
+#define min_f(a, b, c)  (fminf(a, fminf(b, c)))
+#define max_f(a, b, c) (fmaxf(a, fmaxf(b, c)))
+
 inline Eigen::Vector3d random_color(std::shared_ptr<RandGenerator> rand_gen) {
     Eigen::Vector3d color;
     color(0) = rand_gen->rand_float(0.0, 1.0);
@@ -18,7 +21,7 @@ inline Eigen::Vector3d random_color(std::shared_ptr<RandGenerator> rand_gen) {
 
 //https://gist.github.com/yoggy/8999625
 //convert rgb with components in range [0,1] to hsv with h in range [0,360], s in range [0,1] and v in range [0,1]
-Eigen::Vector3d rgb2hsv(const Eigen::Vector3d rgb&){
+inline Eigen::Vector3d rgb2hsv(const Eigen::Vector3d& rgb){
 
     float r=rgb.x();
     float g=rgb.y();
@@ -67,7 +70,7 @@ Eigen::Vector3d rgb2hsv(const Eigen::Vector3d rgb&){
 
 }
 
-Eigen::Vector3d hsv2rgb(const Eigen::Vector3d hsv&){
+inline Eigen::Vector3d hsv2rgb(const Eigen::Vector3d& hsv){
 
     // float h = src_h *   2.0f; // 0-360
     // float s = src_s / 255.0f; // 0.0-1.0
