@@ -120,6 +120,10 @@ public:
         return elapsed_ms() / 1000.0;
     }
 
+    bool is_running(){
+        return m_running;   
+    }
+
 
 private:
     timepoint_t m_start_time;
