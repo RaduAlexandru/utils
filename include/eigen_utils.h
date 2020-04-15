@@ -26,7 +26,7 @@ typedef std::vector<row_type_i> matrix_type_i;
 typedef std::vector<bool> row_type_b;
 typedef std::vector<row_type_b> matrix_type_b;
 
-namespace easy_pbr{
+namespace radu{
 namespace utils{
 
 
@@ -350,4 +350,4 @@ struct MatrixHash : std::unary_function<T, size_t> {
 
 
 } //namespace utils
-} //namespace easy_pbr
+} //namespace radu

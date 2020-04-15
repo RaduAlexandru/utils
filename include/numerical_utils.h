@@ -7,7 +7,7 @@
 // //loguru
 #include <loguru.hpp>
 
-namespace easy_pbr{
+namespace radu{
 namespace utils{
 
 // Converts degrees to radians.
@@ -243,5 +243,5 @@ inline std::vector<int> convert_decimal_to_base(const int num, const int base) {
 } 
 
 } //namespace utils
-} //namespace easy_pbr
+} //namespace radu
 

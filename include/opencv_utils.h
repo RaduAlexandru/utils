@@ -8,7 +8,7 @@
 // //loguru
 // #include <loguru.hpp>
 
-namespace easy_pbr{
+namespace radu{
 namespace utils{
 
 
@@ -75,4 +75,4 @@ inline cv::Mat_<cv::Vec<T,4> > create_alpha_mat(const cv::Mat& mat){
 
 
 } //namespace utils
-} //namespace easy_pbr
+} //namespace radu

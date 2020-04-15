@@ -6,6 +6,8 @@
 
 #include "RandGenerator.h"
 
+namespace radu{
+namespace utils{
 
 #define min_three(a, b, c)  (std::min(a, std::min(b, c)))
 #define max_three(a, b, c) (std::max(a, std::max(b, c)))
@@ -926,3 +928,6 @@ private:
     Eigen::MatrixXf m_viridis_colormap;
 
 };
+
+} //namespace radu
+} //namespace easy_pbr

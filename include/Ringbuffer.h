@@ -1,13 +1,15 @@
 // ringbuffer.h
 // Author: Markus Redeker
 
-#ifndef __RINGBUFFER_H__
-#define __RINGBUFFER_H__
+#pragma once
 
 // Use:
 // ringbuffer r;
 // r.push(); r.back() = new_element;
 // oldest_element = r.front(); r.pop();
+
+namespace radu{
+namespace utils{
 
 template<typename ET, int S, typename ST=int>
 class ringbuffer
@@ -132,4 +134,6 @@ protected:
 };
 
 
-#endif // __RINGBUFFER_H__
+
+} //namespace utils
+} //namespace radu

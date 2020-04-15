@@ -38,6 +38,9 @@
     #include <cuda_runtime_api.h>
 #endif
 
+namespace radu{
+namespace utils{
+
 
 struct Stats{ //for each timer we store some stats so we can compute the avg, min, max an std-dev https://dsp.stackexchange.com/a/1187
 
@@ -296,25 +299,25 @@ static bool is_profiling_gpu(){
 
 //MACROS
 #define TIME_START(name) \
-    Profiler_ns::sync_gpu();\
-    Profiler_ns::Profiler::start_time(name);
+    radu::utils::Profiler_ns::sync_gpu();\
+    radu::utils::Profiler_ns::Profiler::start_time(name);
 #define TIME_END(name) \
-    Profiler_ns::sync_gpu();\
-    Profiler_ns::Profiler::stop_time(name);
+    radu::utils::Profiler_ns::sync_gpu();\
+    radu::utils::Profiler_ns::Profiler::stop_time(name);
 //when you have to sections that are disjoin but you want to get the time it take for both, you can start-pause start-end
 #define TIME_PAUSE(name) \
-    Profiler_ns::sync_gpu();\
-    Profiler_ns::Profiler::pause_time(name);
+    radu::utils::Profiler_ns::sync_gpu();\
+    radu::utils::Profiler_ns::Profiler::pause_time(name);
 #define TIME_SCOPE(name)\
-    Profiler_ns::sync_gpu();\
-    Profiler_ns::Profiler::start_time(name); \
-    SCOPE_EXIT{Profiler_ns::sync_gpu(); Profiler_ns::Profiler::stop_time(name);};
+    radu::utils::Profiler_ns::sync_gpu();\
+    radu::utils::Profiler_ns::Profiler::start_time(name); \
+    SCOPE_EXIT{radu::utils::Profiler_ns::sync_gpu(); radu::utils::Profiler_ns::Profiler::stop_time(name);};
 #define PROFILER_PRINT()\
-    Profiler_ns::Profiler::print_all_stats();
+    radu::utils::Profiler_ns::Profiler::print_all_stats();
 inline float ELAPSED(std::string name){
     //check if the name is in the timings
-    auto got = Profiler_ns::m_timings.find (name);
-    if ( got == Profiler_ns::m_timings.end() ){
+    auto got = radu::utils::Profiler_ns::m_timings.find (name);
+    if ( got == radu::utils::Profiler_ns::m_timings.end() ){
         LOG(FATAL) << "There are no timings recorded for name " <<name;
     }
     float last_timing=got->second.back();
@@ -357,4 +360,7 @@ namespace Profiler_ns{
 
 
 #endif // PROFILER_IMPLEMENTATION
+
+} //namespace utils
+} //namespace radu
 

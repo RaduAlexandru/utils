@@ -9,7 +9,7 @@
 // //loguru
 // #include <loguru.hpp>
 
-namespace easy_pbr{
+namespace radu{
 namespace utils{
 
 
@@ -97,4 +97,4 @@ inline std::string file_to_string (const std::string &filename){
 
 
 } //namespace utils
-} //namespace easy_pbr
+} //namespace radu

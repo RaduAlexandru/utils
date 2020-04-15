@@ -2,6 +2,8 @@
 
 #include <random>
 
+namespace radu{
+namespace utils{
 
 //https://channel9.msdn.com/Events/GoingNative/2013/rand-Considered-Harmful
 // https://kristerw.blogspot.com/2017/05/seeding-stdmt19937-random-number-engine.html
@@ -45,3 +47,6 @@ public:
 private:
     std::mt19937 m_gen;
 };
+
+} //namespace utils
+} //namespace radu

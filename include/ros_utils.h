@@ -1,5 +1,4 @@
-#ifndef ROS_TOOLS_H_INCLUDED
-#define ROS_TOOLS_H_INCLUDED
+#pragma once
 
 #include <ros/ros.h>
 #include <visualization_msgs/Marker.h>
@@ -9,6 +8,10 @@
 
 // #include "StringTools.h"
 #include <iostream>
+
+
+namespace radu{
+namespace utils{
 
 template <typename T>
 T getParamElseError ( ros::NodeHandle & nh, const std::string & paramName )
@@ -75,4 +78,6 @@ void getSingleMsgFromTopic( T * msg, const std::string & topicName, ros::NodeHan
   }
 }
 
-#endif // ROS_TOOLS_H_INCLUDED
+
+} //namespace utils
+} //namespace radu
