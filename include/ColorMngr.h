@@ -81,7 +81,7 @@ inline Eigen::Vector3d hsv2rgb(const Eigen::Vector3d& hsv){
     float s = hsv.y();
     float v = hsv.z();
 
-    float r, g, b; // 0.0-1.0
+    float r=0.0, g=0.0, b=0.0; // 0.0-1.0
 
     int   hi = (int)(h / 60.0f) % 6;
     float f  = (h / 60.0f) - hi;
