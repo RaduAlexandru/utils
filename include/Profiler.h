@@ -289,7 +289,7 @@ inline void sync_gpu(){
         #endif
     }
 }
-static bool is_profiling_gpu(){
+inline static bool is_profiling_gpu(){
     return m_profile_gpu;
 }
 
