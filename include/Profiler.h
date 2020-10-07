@@ -292,6 +292,9 @@ inline void sync_gpu(){
 inline static bool is_profiling_gpu(){
     return m_profile_gpu;
 }
+inline static void set_profile_gpu(const bool val){
+    m_profile_gpu=val;
+}
 
 } //namespace Profiler_ns
 
