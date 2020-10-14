@@ -332,6 +332,78 @@ inline T concat(const T& mat_1, const T& mat_2){
     return mat_new;
 }
 
+
+//transform from a vector of xyz and qx,qy,qz,qw into a full Affine3d
+template <class T>
+inline Eigen::Transform<T,3,Eigen::Affine>  tf_vec2matrix(const Eigen::Matrix< T, Eigen::Dynamic, 1 >& tf_vec){
+
+    CHECK(tf_vec.rows()==7) << "Expecting 7 elements corresponding to x,y,z, qx,qy,qz,qw";
+
+    Eigen::Transform<T,3,Eigen::Affine> tf;
+    tf.setIdentity();
+    tf.translation().x() = tf_vec[0];
+    tf.translation().y() = tf_vec[1];
+    tf.translation().z() = tf_vec[2];
+    Eigen::Quaterniond q; 
+    q.x() = tf_vec[3];
+    q.y() = tf_vec[4];
+    q.z() = tf_vec[5];
+    q.w() = tf_vec[6];
+    q.normalize();
+    tf.linear()=q.toRotationMatrix();
+
+    return tf;
+}
+//transform from a Affine3d into a vec containing x,y,z, qx,qy,qz,qw
+template <class T>
+inline Eigen::Matrix< T, Eigen::Dynamic, 1 >  tf_matrix2vec(const Eigen::Transform<T,3,Eigen::Affine> & tf){
+
+    Eigen::Quaternion<T> q (tf.linear());
+    auto t = tf.translation();
+
+    Eigen::Matrix< T, Eigen::Dynamic, 1 > vec;
+    vec.resize(7);
+    vec[0]=t.x();
+    vec[1]=t.y();
+    vec[2]=t.z();
+    vec[3]=q.x();
+    vec[4]=q.y();
+    vec[5]=q.z();
+    vec[6]=q.w();
+
+    return vec;
+}
+
+//transform from a vector of fx,fy,cx,cy into a full Matrix3d
+template <class T>
+inline Eigen::Matrix<T,3,3>  K_vec2matrix(const Eigen::Matrix< T, Eigen::Dynamic, 1 >& K_vec){
+
+    CHECK(K_vec.rows()==4) << "Expecting 4 elements corresponding to fx,fy,cx,cy";
+
+    Eigen::Matrix<T,3,3> K;
+    K.setIdentity();
+    K(0,0)= K_vec[0];
+    K(1,1)= K_vec[1];
+    K(0,2)= K_vec[2];
+    K(1,2)= K_vec[3];
+
+    return K;
+}
+//transform from a  Matrix3d
+template <class T>
+inline Eigen::Matrix< T, Eigen::Dynamic, 1 >  K_matrix2vec(const Eigen::Matrix<T,3,3>& K){
+
+    Eigen::Matrix< T, Eigen::Dynamic, 1 > K_vec;
+    K_vec.resize(4);
+    K_vec(0)=K(0,0);
+    K_vec(1)=K(1,1);
+    K_vec(2)=K(0,2);
+    K_vec(3)=K(1,2);
+
+    return K_vec;
+}
+
+
 //has function for eigen matrices and vectors  https://wjngkoh.wordpress.com/2015/03/04/c-hash-function-for-eigen-matrix-and-vector/
 template<typename T>
 struct MatrixHash : std::unary_function<T, size_t> {
