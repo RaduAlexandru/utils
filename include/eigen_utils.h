@@ -344,7 +344,7 @@ inline Eigen::Transform<T,3,Eigen::Affine>  tf_vec2matrix(const Eigen::Matrix< T
     tf.translation().x() = tf_vec[0];
     tf.translation().y() = tf_vec[1];
     tf.translation().z() = tf_vec[2];
-    Eigen::Quaterniond q; 
+    Eigen::Quaternion<T> q; 
     q.x() = tf_vec[3];
     q.y() = tf_vec[4];
     q.z() = tf_vec[5];
