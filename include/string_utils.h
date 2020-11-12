@@ -50,6 +50,13 @@ static inline std::string trim_copy(std::string s) {
     return s;
 }
 
+static inline bool contains(const std::string line, const std::string query_word){
+    if (line.find(query_word) != std::string::npos) {
+        return true;
+    }
+    return false;
+}
+
 //https://stackoverflow.com/a/37454181
 inline std::vector<std::string> split(const std::string& str, const std::string& delim){
     std::vector<std::string> tokens;
