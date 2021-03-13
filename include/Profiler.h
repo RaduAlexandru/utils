@@ -73,7 +73,7 @@ class Timer{
 public:
     //https://stackoverflow.com/a/40136853
     using precision = long double;
-    using ratio = std::milli;
+    using ratio = std::nano;
     using clock_t=std::chrono::high_resolution_clock;
     using duration_t = std::chrono::duration<precision, ratio>;
     using timepoint_t = std::chrono::time_point<clock_t, duration_t>;
@@ -107,7 +107,7 @@ public:
 
     }
 
-    double elapsed_ms(){
+    double elapsed_ns(){
         timepoint_t endTime;
 
         if(m_running){
@@ -116,7 +116,11 @@ public:
             endTime = m_end_time;
         }
 
-        return std::chrono::duration_cast<std::chrono::milliseconds>(endTime - m_start_time).count();
+        return std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - m_start_time).count();
+    }
+
+    double elapsed_ms(){
+        return elapsed_ns() / 1000000.0;
     }
 
     double elapsed_s(){
