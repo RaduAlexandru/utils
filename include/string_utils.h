@@ -72,6 +72,30 @@ inline std::vector<std::string> split(const std::string& str, const std::string&
     return tokens;
 }
 
+
+// Erase all Occurrences of given substring from main string
+inline std::string erase_substring(const std::string& main_string, const std::string& to_erase){
+    std::string string_modified=main_string;
+    size_t pos = std::string::npos;
+    // Search for the substring in string in a loop untill nothing is found
+    while ((pos  = string_modified.find(to_erase) )!= std::string::npos){
+        // If found then erase it from string
+        string_modified.erase(pos, to_erase.length());
+    }
+
+    return string_modified;
+}
+//https://thispointer.com/how-to-remove-substrings-from-a-string-in-c/#:~:text=Remove%20First%20Occurrence%20of%20given%20substring%20from%20main%20string&text=*%20Erase%20First%20Occurrence%20of%20given%20substring%20from%20main%20string.&text=To%20remove%20first%20occurrence%20of,remove%20it%20from%20string%20i.e.
+inline std::string erase_substrings(std::string & main_string, const std::vector<std::string> & to_erase_list){
+
+    std::string string_modified=main_string;
+    for(size_t i=0; i<to_erase_list.size(); i++){
+        string_modified= erase_substring(string_modified, to_erase_list[i]);
+    }
+
+    return string_modified;
+}
+
 inline std::string lowercase(const std::string str){
     std::string new_str=str;
     std::transform(new_str.begin(), new_str.end(), new_str.begin(), ::tolower);
