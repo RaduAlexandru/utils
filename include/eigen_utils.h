@@ -29,6 +29,12 @@ typedef std::vector<row_type_b> matrix_type_b;
 namespace radu{
 namespace utils{
 
+// //append new_mat into a preallocated mat and check if we have enough size to append there
+// template<class T>
+// inline void eigen_append_in_preallocated(Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>& mat, const Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>& new_mat){
+
+// }
+
 
 inline void removeRow(Eigen::MatrixXd& matrix, unsigned int rowToRemove)
 {
