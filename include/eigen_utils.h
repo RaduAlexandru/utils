@@ -74,7 +74,7 @@ inline void eigen2file(Eigen::MatrixXd& src, std::string pathAndName)
  }
 
 //when using dyanmic vector we don't need an eigen alocator
-template<class T> 
+template<class T>
 Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> vec2eigen( const std::vector<  Eigen::Matrix<T, Eigen::Dynamic, 1>>& std_vec )
 {
     if(std_vec.size()==0){
@@ -94,7 +94,7 @@ Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> vec2eigen( const std::vector<  
 
 
 //for the case of using fixed sized vector like Vector3f instead of a dynamic VectorXf, we need an aligned allocator
-template<class T, int rows > 
+template<class T, int rows >
 Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> vec2eigen( const std::vector<  Eigen::Matrix<T, rows, 1>, Eigen::aligned_allocator< Eigen::Matrix<T, rows, 1>>   >& std_vec )
 {
     if(std_vec.size()==0){
@@ -114,7 +114,7 @@ Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> vec2eigen( const std::vector<  
 
 
 //for the case of using fixed sized vector like Vector3f instead of a dynamic VectorXf, we need an aligned allocator
-template<class T> 
+template<class T>
 Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> vec2eigen( const std::vector< T >& std_vec )
 {
     if(std_vec.size()==0){
@@ -350,7 +350,7 @@ inline Eigen::Transform<T,3,Eigen::Affine>  tf_vec2matrix(const Eigen::Matrix< T
     tf.translation().x() = tf_vec[0];
     tf.translation().y() = tf_vec[1];
     tf.translation().z() = tf_vec[2];
-    Eigen::Quaternion<T> q; 
+    Eigen::Quaternion<T> q;
     q.x() = tf_vec[3];
     q.y() = tf_vec[4];
     q.z() = tf_vec[5];
@@ -408,6 +408,47 @@ inline Eigen::Matrix< T, Eigen::Dynamic, 1 >  K_matrix2vec(const Eigen::Matrix<T
 
     return K_vec;
 }
+
+//from a series of tokens, fills a martrix, assuming row major;
+template <typename T, int R, int C>
+inline void  tokens2matrix(const std::vector<std::string> tokens, Eigen::Matrix<T,R,C>& matrix, bool rowmajor=true){
+
+    int matrix_size=matrix.rows()*matrix.cols();
+    CHECK(matrix_size==tokens.size()) << "The nr of tokens does not correspond to the matrix size. Tokens has size " << tokens.size() << " matrix has rows and cols " << matrix.rows() <<" x " << matrix.cols();
+
+
+    //get the tokens into an vector;
+    std::vector<T> array;
+    for(int i=0;i<tokens.size();i++){
+        array.push_back( std::stod(tokens[i]) );
+    }
+
+    if(rowmajor){
+        matrix = Eigen::Map<const Eigen::Matrix<T,R,C,Eigen::RowMajor> >(array.data() );
+    }else{
+        matrix = Eigen::Map<const Eigen::Matrix<T,R,C> >(array.data() );
+    }
+
+
+}
+// //in the case of a dynamic matrix we need to provide a size estimate to the MAP https://eigen.tuxfamily.org/dox/group__TutorialMapClass.html
+//https://eigen.tuxfamily.org/dox/classEigen_1_1Map.html
+template <typename T>
+inline void  tokens2matrix(const std::vector<std::string> tokens, Eigen::Matrix<T,Eigen::Dynamic,1>& matrix ){
+
+    int matrix_size=matrix.rows()*matrix.cols();
+    CHECK(matrix_size==tokens.size()) << "The nr of tokens does not correspond to the matrix size. Tokens has size " << tokens.size() << " matrix has rows and cols " << matrix.rows() <<" x " << matrix.cols();
+
+    //get the tokens into an vector;
+    std::vector<T> array;
+    for(int i=0;i<tokens.size();i++){
+        array.push_back( std::stod(tokens[i]) );
+    }
+
+    matrix = Eigen::Map<const Eigen::Matrix<T,Eigen::Dynamic,1> >(array.data(), tokens.size());
+
+}
+
 
 
 //has function for eigen matrices and vectors  https://wjngkoh.wordpress.com/2015/03/04/c-hash-function-for-eigen-matrix-and-vector/
