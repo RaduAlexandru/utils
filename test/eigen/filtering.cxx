@@ -43,7 +43,7 @@ void filter(){
     mat.setRandom();
 
     //the rows to be kept are specified in a vector of bools of size 5
-    std::vector<bool> mask(5, false); 
+    std::vector<bool> mask(5, false);
     mask[0]=true;
     mask[2]=true;
     mask[4]=true;
@@ -63,7 +63,7 @@ void filter(){
             LOG(FATAL) << "At position (1," << i << ") the value is not the same. The original mat has " << mat(3,i) << " and the mat_filtered has " << mat_filtered(1,i);
         }
     }
-    
+
 
 }
 
@@ -76,7 +76,7 @@ void filter_and_get_indirection(){
     mat.setRandom();
 
     //the rows to be kept are specified in a vector of bools of size 5
-    std::vector<bool> mask(5, false); 
+    std::vector<bool> mask(5, false);
     mask[0]=true;
     mask[2]=true;
     mask[4]=true;
@@ -93,7 +93,7 @@ void filter_and_get_indirection(){
     CHECK(indirection[2]==-1) << "Indirection vec is wrong";
     CHECK(indirection[3]==1) << "Indirection vec is wrong";
     CHECK(indirection[4]==-1) << "Indirection vec is wrong";
-    
+
 }
 
 void filter_and_get_inverse_indirection(){
@@ -104,7 +104,7 @@ void filter_and_get_inverse_indirection(){
     mat.setRandom();
 
     //the rows to be kept are specified in a vector of bools of size 5
-    std::vector<bool> mask(5, false); 
+    std::vector<bool> mask(5, false);
     mask[0]=true;
     mask[2]=true;
     mask[4]=true;
@@ -118,7 +118,7 @@ void filter_and_get_inverse_indirection(){
     //we removed rows 0,2,4 and therefore rows 1,3 ended up being rows 0 and 1 in the mat_filtered. The inverse_indirection should therefore be [1,3]
     CHECK(inverse_indirection[0]==1) << "Inverse indirection vec is wrong";
     CHECK(inverse_indirection[1]==3) << "Inverse indirection vec is wrong";
-    
+
 
 }
 
@@ -130,7 +130,7 @@ void filter_and_get_both_indirections(){
     mat.setRandom();
 
     //the rows to be kept are specified in a vector of bools of size 5
-    std::vector<bool> mask(5, false); 
+    std::vector<bool> mask(5, false);
     mask[0]=true;
     mask[2]=true;
     mask[4]=true;
@@ -154,7 +154,7 @@ void filter_and_get_both_indirections(){
     //we removed rows 0,2,4 and therefore rows 1,3 ended up being rows 0 and 1 in the mat_filtered. The inverse_indirection should therefore be [1,3]
     CHECK(inverse_indirection[0]==1) << "Inverse indirection vec is wrong";
     CHECK(inverse_indirection[1]==3) << "Inverse indirection vec is wrong";
-    
+
 
 }
 
@@ -166,7 +166,7 @@ void filter_and_apply_indirection(){
     mat.setRandom();
 
     //the rows to be kept are specified in a vector of bools of size 5
-    std::vector<bool> mask(5, false); 
+    std::vector<bool> mask(5, false);
     mask[0]=true;
     mask[2]=true;
     mask[4]=true;
@@ -189,12 +189,12 @@ void filter_and_apply_indirection(){
     indices_mat_filtered=filter_apply_indirection(indirection, indices_mat);
 
     CHECK(indices_mat_filtered.rows()==2) << "Indices mat filtered should have 2 rows. However it has " << indices_mat_filtered.rows();
-    
+
     //they should index only up until 2 now because we only have 2 rows left in the matrix
     int max=indices_mat_filtered.maxCoeff();
     CHECK(max==1) << "Max index should be 1 because we can only index the row 0 and 1. However, the max is " << max;
 
-    
+
 }
 
 

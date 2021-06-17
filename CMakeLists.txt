@@ -33,7 +33,7 @@ include_directories(${OpenCV_INCLUDE_DIR})
 
 
 # ###   SOURCES   #################################################################
-# set(MY_SRC  
+# set(MY_SRC
 #     src/ColormapMngr.cxx
 # )
 
@@ -65,24 +65,3 @@ add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND}
     # --verbose
     --output-on-failure
 )
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

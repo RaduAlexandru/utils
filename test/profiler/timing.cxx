@@ -63,7 +63,7 @@ void scope(){
     float error=std::fabs(estimated-duration);
     if( error>0.1 ){
         LOG(FATAL) << "The error in the estimate is too large. The duration should be " << duration << " but the estimated is " << estimated << " which is an error of " << error << " millisecond";
-    } 
+    }
 
 }
 

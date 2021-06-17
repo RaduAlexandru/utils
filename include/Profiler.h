@@ -18,7 +18,7 @@
 #if defined(PROFILER_IMPLEMENTATION) && !defined(PROFILER_HAS_BEEN_IMPLEMENTED)
     #define LOGURU_IMPLEMENTATION 1 //if we are implementing profiler we should also implement the loguru becase we need to use it
 #endif
-#include <loguru.hpp> 
+#include <loguru.hpp>
 
 
 #ifndef ENABLE_GL_PROFILING
@@ -32,7 +32,7 @@
 
 
 #if ENABLE_GL_PROFILING
-    #include <glad/glad.h> 
+    #include <glad/glad.h>
 #endif
 #if ENABLE_CUDA_PROFILING
     #include <cuda_runtime_api.h>
@@ -57,13 +57,13 @@ struct Stats{ //for each timer we store some stats so we can compute the avg, mi
 };
 
 inline std::ostream& operator<<(std::ostream& os, const Stats& s){
-    os << boost::format("mean: %-7.2f") % s.mean; 
-    os << boost::format("nr_samples: %-5d") % s.nr_samples; 
-    os << boost::format("min: %-7.2f") % s.min; 
-    os << boost::format("max: %-7.2f") % s.max; 
-    os << boost::format("exp_mean: %-7.2f") % s.exp_mean; 
-    os << boost::format("variance: %-7.2f") % s.variance; 
-    os << boost::format("std_dev: %-7.2f") % s.std_dev; 
+    os << boost::format("mean: %-7.2f") % s.mean;
+    os << boost::format("nr_samples: %-5d") % s.nr_samples;
+    os << boost::format("min: %-7.2f") % s.min;
+    os << boost::format("max: %-7.2f") % s.max;
+    os << boost::format("exp_mean: %-7.2f") % s.exp_mean;
+    os << boost::format("variance: %-7.2f") % s.variance;
+    os << boost::format("std_dev: %-7.2f") % s.std_dev;
 
     return os;
 }
@@ -128,7 +128,7 @@ public:
     }
 
     bool is_running(){
-        return m_running;   
+        return m_running;
     }
 
 
@@ -329,9 +329,9 @@ inline float ELAPSED(std::string name){
     }
     float last_timing=got->second.back();
 
-    return last_timing;   
+    return last_timing;
 }
-    
+
 
 
 
@@ -370,4 +370,3 @@ namespace Profiler_ns{
 
 } //namespace utils
 } //namespace radu
-

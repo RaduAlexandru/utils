@@ -13,12 +13,12 @@ namespace utils{
 // Converts degrees to radians.
 inline float degrees2radians(float angle_degrees){
     return  (angle_degrees * M_PI / 180.0);
-} 
+}
 
 // Converts radians to degrees.
 inline float radians2degrees(float angle_radians){
     return (angle_radians * 180.0 / M_PI);
-} 
+}
 //clamp a value between a min and a max
 template <class T>
 inline T clamp(const T val, const T min, const T max){
@@ -27,7 +27,7 @@ inline T clamp(const T val, const T min, const T max){
 
 //Best answer of https://stackoverflow.com/questions/5731863/mapping-a-numeric-range-onto-another
 inline float map(const float input, const float input_start,const float input_end, const float output_start, const float output_end) {
-    //we clamp the input between the start and the end 
+    //we clamp the input between the start and the end
     float input_clamped=clamp(input, input_start, input_end);
     return output_start + ((output_end - output_start) / (input_end - input_start)) * (input_clamped - input_start);
 }
@@ -83,17 +83,17 @@ inline int next_power_of_two(int x) { // https://github.com/LWJGL/lwjgl3-wiki/wi
 template <class T>
 inline T wrap(const T val, const T max){
     T new_val = val;
-  
+
     while(new_val >= max) new_val = (new_val - max);
     while(new_val < 0) new_val = (new_val + max);
-  
+
     return new_val;
 }
 
 //from a 2D coordinate, get a linear one, with wraping
 template <class T>
 inline T idx_2D_to_1D_wrap(const T x, const T y, const T width, const T height){
-  
+
     T x_wrap=wrap(x,width);
     T y_wrap=wrap(y,height);
 
@@ -117,13 +117,13 @@ inline T idx_2D_to_1D(const T x, const T y, const T width, const T height){
 template <class T>
 inline Eigen::Vector2i idx_1D_to_2D(const T idx, const T width, const T height){
 
-    T x=idx%width; 
-    T y=idx/width; 
+    T x=idx%width;
+    T y=idx/width;
 
     CHECK(x<width) << "x is accessing out of bounds of the width. x is " << x << " width is " << width;
     CHECK(y<height) << "y is accessing out of bounds of the height. y is " << y << " height is " << height;
 
-    Eigen::Vector2i pos;    
+    Eigen::Vector2i pos;
     pos.x()=x;
     pos.y()=y;
 
@@ -136,7 +136,7 @@ inline Eigen::Vector3i idx_1D_to_3D(const int idx, const Eigen::Vector3i& grid_s
 
     // int z = idx / (grid_sizes.x() *grid_sizes.y() ) ; //we do a full z channel when we sweapped both x and y
     // int y = z % grid_sizes.y();
-    // int x = y % grid_sizes.x(); 
+    // int x = y % grid_sizes.x();
 
     //http://www.alecjacobson.com/weblog/?p=1425
     int x = idx % grid_sizes.x();
@@ -147,7 +147,7 @@ inline Eigen::Vector3i idx_1D_to_3D(const int idx, const Eigen::Vector3i& grid_s
     CHECK(y<grid_sizes.y()) << "y is accessing out of bounds of the y grid size. y is " << y << " y span is " << grid_sizes.y();
     CHECK(z<grid_sizes.z()) << "z is accessing out of bounds of the z grid size. z is " << z << " y span is " << grid_sizes.z();
 
-    Eigen::Vector3i pos;    
+    Eigen::Vector3i pos;
     pos.x()=x;
     pos.y()=y;
     pos.z()=z;
@@ -156,7 +156,7 @@ inline Eigen::Vector3i idx_1D_to_3D(const int idx, const Eigen::Vector3i& grid_s
 }
 
 //from a 3D coordinate, get a 1D one assuming that things are stored in memory in order zyx where x is the fastest changing dimension and z is the slowest
-//input is a index in format xyz with respect to the origin of the grid 
+//input is a index in format xyz with respect to the origin of the grid
 inline int idx_3D_to_1D(const Eigen::Vector3i pos, const Eigen::Vector3i& grid_sizes){
 
     //http://www.alecjacobson.com/weblog/?p=1425
@@ -175,20 +175,20 @@ inline Eigen::Vector4i idx_1D_to_4D(const int idx, const Eigen::Vector4i& grid_s
 
     // int z = idx / (grid_sizes.x() *grid_sizes.y() ) ; //we do a full z channel when we sweapped both x and y
     // int y = z % grid_sizes.y();
-    // int x = y % grid_sizes.x(); 
+    // int x = y % grid_sizes.x();
 
     //http://www.alecjacobson.com/weblog/?p=1425
     int x = idx % grid_sizes.x();
     int y = (idx - x)/grid_sizes.x() % grid_sizes.y();
     int z = ((idx - x)/grid_sizes.x()-y) % grid_sizes.z();
-    int w = (((idx - x)/grid_sizes.x()-y)-z)/ grid_sizes.z(); 
+    int w = (((idx - x)/grid_sizes.x()-y)-z)/ grid_sizes.z();
 
     CHECK(x<grid_sizes.x()) << "x is accessing out of bounds of the x grid size. x is " << x << " x span is " << grid_sizes.x() ;
     CHECK(y<grid_sizes.y()) << "y is accessing out of bounds of the y grid size. y is " << y << " y span is " << grid_sizes.y();
     CHECK(z<grid_sizes.z()) << "z is accessing out of bounds of the z grid size. z is " << z << " y span is " << grid_sizes.z();
     CHECK(w<grid_sizes.w()) << "w is accessing out of bounds of the w grid size. w is " << z << " w span is " << grid_sizes.w();
 
-    Eigen::Vector4i pos;    
+    Eigen::Vector4i pos;
     pos.x()=x;
     pos.y()=y;
     pos.z()=z;
@@ -211,37 +211,36 @@ inline int idx_4D_to_1D(const Eigen::Vector4i pos, const Eigen::Vector4i& grid_s
     return index;
 }
 
-// To return char for a value. For example '2' 
-// is returned for 2. 'A' is returned for 10. 'B' 
-// for 11 
+// To return char for a value. For example '2'
+// is returned for 2. 'A' is returned for 10. 'B'
+// for 11
 // Based on https://www.geeksforgeeks.org/convert-base-decimal-vice-versa/
-inline char reVal(int num) { 
-    if (num >= 0 && num <= 9) 
-        return (char)(num + '0'); 
+inline char reVal(int num) {
+    if (num >= 0 && num <= 9)
+        return (char)(num + '0');
     else
-        return (char)(num - 10 + 'A'); 
-} 
+        return (char)(num - 10 + 'A');
+}
 
 //go from decimat base to any other base and returns the digit of that base as a std vector. Based on https://www.geeksforgeeks.org/convert-base-decimal-vice-versa/
 //useful for creating uniform boxel grids in any dimension where vertices are defined as (0,0), (0,1), (1,0), (1,1) etc. Look at misc_utils/PermutoLatticePlotter for details
-inline std::vector<int> convert_decimal_to_base(const int num, const int base) { 
-    // int index = 0;  // Initialize index of result 
+inline std::vector<int> convert_decimal_to_base(const int num, const int base) {
+    // int index = 0;  // Initialize index of result
 
     int val=num;
     std::vector<int> digits;
-    // Convert input number is given base by repeatedly 
-    // dividing it by base and taking remainder 
-    while (val > 0) { 
-        digits.push_back( val%base ); 
-        val /= base; 
-    } 
-  
-    // Reverse the result 
+    // Convert input number is given base by repeatedly
+    // dividing it by base and taking remainder
+    while (val > 0) {
+        digits.push_back( val%base );
+        val /= base;
+    }
+
+    // Reverse the result
     std::reverse(digits.begin(), digits.end());
-  
-    return digits; 
-} 
+
+    return digits;
+}
 
 } //namespace utils
 } //namespace radu
-

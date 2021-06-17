@@ -9,7 +9,7 @@ namespace utils{
 // https://kristerw.blogspot.com/2017/05/seeding-stdmt19937-random-number-engine.html
 class RandGenerator{
 public:
-    RandGenerator(unsigned int seed=0): 
+    RandGenerator(unsigned int seed=0):
         // m_gen((std::random_device())()) //https://stackoverflow.com/a/29580889
         m_gen(seed) //start with a defined seed
         {
@@ -17,19 +17,19 @@ public:
     }
     //returns a random float in the range [a,b], inclusive
     float rand_float(float a, float b) {
-        std::uniform_real_distribution<float> distribution(a,b); 
+        std::uniform_real_distribution<float> distribution(a,b);
         return distribution(m_gen);
     }
 
     //returns a random float with a normal distribution with mean and stddev
     float rand_normal_float(float mean, float stddev) {
-        std::normal_distribution<float> distribution(mean, stddev); 
+        std::normal_distribution<float> distribution(mean, stddev);
         return distribution(m_gen);
     }
 
     //returns a random int in the range between [a,b] inclusive
     int rand_int(int a, int b) {
-        std::uniform_int_distribution<int> distribution(a,b); 
+        std::uniform_int_distribution<int> distribution(a,b);
         return distribution(m_gen);
     }
 

@@ -17,4 +17,3 @@ add_executable(profiler_timing ${PROJECT_SOURCE_DIR}/profiler/timing.cxx  )
 target_link_libraries(profiler_timing ${LIBS} )
 add_executable(eigen_filtering ${PROJECT_SOURCE_DIR}/eigen/filtering.cxx  )
 target_link_libraries(eigen_filtering ${LIBS} )
-
