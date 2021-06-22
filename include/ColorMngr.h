@@ -6,6 +6,9 @@
 
 #include "RandGenerator.h"
 
+#include <opencv2/highgui/highgui.hpp> //useful for converting cv mats to colored ones
+
+
 namespace radu{
 namespace utils{
 
@@ -113,6 +116,7 @@ inline Eigen::Vector3d hsv2rgb(const Eigen::Vector3d& hsv){
 class ColorMngr{
 public:
 
+
     Eigen::Vector3f magma_color(const float x){
         float x_clamped = std::max(0.0f, std::min(1.0f, x));
         return m_magma_colormap.row(static_cast<size_t>(std::round(x_clamped * 255.0)));
@@ -139,6 +143,57 @@ public:
     Eigen::MatrixXf viridis_colormap(){
         return m_viridis_colormap;
     }
+
+    //convenience functions to color a mat into color
+    cv::Mat mat2color(const cv::Mat& mat, const std::string color_type){
+        //we only deal with mat which has floats so we have to double check that. based on https://stackoverflow.com/a/17820615
+        uchar depth = mat.type() & CV_MAT_DEPTH_MASK;
+        if (depth!=CV_32F){
+            throw std::runtime_error("Mat has to have type float as we assume the values to lie in range [0,1");
+        }
+
+        //check if the color type is known
+        if (color_type=="magma" || color_type=="plasma" || color_type=="viridis"){
+            //all good
+        }else{
+            throw std::runtime_error("Color type not known");
+        }
+
+
+        //we color based only on the first channel
+        cv::Mat colored(mat.rows, mat.cols, CV_32FC3);
+
+        //split in order to get just the first channels 
+        cv::Mat channels[3];   
+        cv::split(mat,channels); 
+        cv::Mat to_convert=channels[0];
+
+        for(int i=0; i<to_convert.rows; i++){
+            for(int j=0; j<to_convert.cols; j++) {
+                float val = to_convert.at<float>(i,j);
+
+                Eigen::Vector3f color;
+                if (color_type=="magma"){
+                    color=magma_color(val);
+                }else if(color_type=="plasma"){
+                    color=plasma_color(val);
+                }else if(color_type=="viridis"){
+                    color=viridis_color(val);
+                }
+
+                //the color is in RGB but opencv wants bgr...
+                colored.at<cv::Vec3f>(i,j)[0] = color.z();
+                colored.at<cv::Vec3f>(i,j)[1] = color.y();
+                colored.at<cv::Vec3f>(i,j)[2] = color.x();
+
+            }
+        }
+
+
+        return colored;
+
+    }
+
 
     ColorMngr(){
         m_magma_colormap.resize(256,3);
