@@ -159,12 +159,19 @@ public:
             throw std::runtime_error("Color type not known");
         }
 
+        bool has_alpha=mat.channels()==4;
+
 
         //we color based only on the first channel
-        cv::Mat colored(mat.rows, mat.cols, CV_32FC3);
+        cv::Mat colored;
+        if (has_alpha){
+            colored=cv::Mat(mat.rows, mat.cols, CV_32FC4);
+        }else{
+            colored=cv::Mat(mat.rows, mat.cols, CV_32FC3);
+        }
 
         //split in order to get just the first channels 
-        cv::Mat channels[3];   
+        cv::Mat channels[mat.channels()];   
         cv::split(mat,channels); 
         cv::Mat to_convert=channels[0];
 
@@ -182,9 +189,17 @@ public:
                 }
 
                 //the color is in RGB but opencv wants bgr...
-                colored.at<cv::Vec3f>(i,j)[0] = color.z();
-                colored.at<cv::Vec3f>(i,j)[1] = color.y();
-                colored.at<cv::Vec3f>(i,j)[2] = color.x();
+                if (has_alpha){
+                    colored.at<cv::Vec4f>(i,j)[0] = color.z();
+                    colored.at<cv::Vec4f>(i,j)[1] = color.y();
+                    colored.at<cv::Vec4f>(i,j)[2] = color.x();
+                    colored.at<cv::Vec4f>(i,j)[3] = channels[3].at<float>(i,j); //copy the alpha channel
+                }else{
+                    colored.at<cv::Vec3f>(i,j)[0] = color.z();
+                    colored.at<cv::Vec3f>(i,j)[1] = color.y();
+                    colored.at<cv::Vec3f>(i,j)[2] = color.x();
+                }
+                
 
             }
         }
