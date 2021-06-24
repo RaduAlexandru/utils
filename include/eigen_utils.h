@@ -360,6 +360,27 @@ inline Eigen::Transform<T,3,Eigen::Affine>  tf_vec2matrix(const Eigen::Matrix< T
 
     return tf;
 }
+//transform from a vector of strings xyz and qx,qy,qz,qw into a full Affine3d
+template <class T>
+inline Eigen::Transform<T,3,Eigen::Affine>  tf_vecstring2matrix(const std::vector<std::string>& tokens ){
+
+    CHECK(tokens.size()==7) << "Expecting 7 elements corresponding to x,y,z, qx,qy,qz,qw";
+
+    Eigen::Transform<T,3,Eigen::Affine> tf;
+    tf.setIdentity();
+    tf.translation().x() = std::stod(tokens[0]);
+    tf.translation().y() = std::stod(tokens[1]);
+    tf.translation().z() = std::stod(tokens[2]);
+    Eigen::Quaternion<T> q;
+    q.x() = std::stod(tokens[3]);
+    q.y() = std::stod(tokens[4]);
+    q.z() = std::stod(tokens[5]);
+    q.w() = std::stod(tokens[6]);
+    q.normalize();
+    tf.linear()=q.toRotationMatrix();
+
+    return tf;
+}
 //transform from a Affine3d into a vec containing x,y,z, qx,qy,qz,qw
 template <class T>
 inline Eigen::Matrix< T, Eigen::Dynamic, 1 >  tf_matrix2vec(const Eigen::Transform<T,3,Eigen::Affine> & tf){
@@ -378,6 +399,22 @@ inline Eigen::Matrix< T, Eigen::Dynamic, 1 >  tf_matrix2vec(const Eigen::Transfo
     vec[6]=q.w();
 
     return vec;
+}
+//transform from a Affine3d into a vector of strings containing x,y,z, qx,qy,qz,qw
+template <class T>
+inline std::vector<std::string>  tf_matrix2vecstring(const Eigen::Transform<T,3,Eigen::Affine> & tf){
+
+    Eigen::Matrix< T, Eigen::Dynamic, 1 > vec;
+    vec=tf_matrix2vec(tf);
+
+    std::vector<std::string> tokens;
+    for (int i=0; i<vec.rows(); i++){
+        std::string num_string=std::to_string(vec(i));
+        tokens.push_back(num_string);
+    }
+
+    
+    return tokens;
 }
 
 //transform from a vector of fx,fy,cx,cy into a full Matrix3d

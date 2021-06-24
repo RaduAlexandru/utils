@@ -4,6 +4,8 @@
 #include <string>
 #include <algorithm>
 #include <fstream>
+#include <iterator>
+#include <sstream>
 
 
 // //loguru
@@ -71,6 +73,24 @@ inline std::vector<std::string> split(const std::string& str, const std::string&
     while (pos < str.length() && prev < str.length());
     return tokens;
 }
+
+//joins the tokens together in a string separated by a certain delimiter  https://stackoverflow.com/a/5289170
+template <typename Range, typename Value = typename Range::value_type>
+inline std::string join(Range const& tokens, const std::string& delim){
+    std::ostringstream os;
+    auto b = std::begin(tokens), e = std::end(tokens);
+
+    if (b != e) {
+        std::copy(b, std::prev(e), std::ostream_iterator<Value>(os, delim.c_str() ));
+        b = std::prev(e);
+    }
+    if (b != e) {
+        os << *b;
+    }
+
+    return os.str();
+}
+
 
 
 // Erase all Occurrences of given substring from main string
