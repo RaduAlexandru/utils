@@ -93,9 +93,10 @@ Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> vec2eigen( const std::vector<  
 }
 
 
-//for the case of using fixed sized vector like Vector3f instead of a dynamic VectorXf, we need an aligned allocator
+//for the case of using fixed sized vector like Vector3f, it also works with dynamic types if you write the template explicitly
 template<class T, int rows >
-Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> vec2eigen( const std::vector<  Eigen::Matrix<T, rows, 1>, Eigen::aligned_allocator< Eigen::Matrix<T, rows, 1>>   >& std_vec )
+// Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> vec2eigen( const std::vector<  Eigen::Matrix<T, rows, 1>, Eigen::aligned_allocator< Eigen::Matrix<T, rows, 1>>   >& std_vec )
+Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> vec2eigen( const std::vector<  Eigen::Matrix<T, rows, 1>>   & std_vec )
 {
     if(std_vec.size()==0){
         //return empty eigen mat
@@ -113,8 +114,11 @@ Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> vec2eigen( const std::vector<  
 }
 
 
-//for the case of using fixed sized vector like Vector3f instead of a dynamic VectorXf, we need an aligned allocator
-template<class T>
+//for the case of using a vector of double of floats or whatever numeric type. It will only take numeric types and not anything else https://stackoverflow.com/a/14294277
+template<
+    class T,
+    typename = typename std::enable_if<std::is_arithmetic<T>::value, T>::type
+>
 Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> vec2eigen( const std::vector< T >& std_vec )
 {
     if(std_vec.size()==0){
@@ -413,7 +417,7 @@ inline std::vector<std::string>  tf_matrix2vecstring(const Eigen::Transform<T,3,
         tokens.push_back(num_string);
     }
 
-    
+
     return tokens;
 }
 
