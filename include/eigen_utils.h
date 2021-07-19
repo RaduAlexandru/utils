@@ -136,6 +136,21 @@ Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> vec2eigen( const std::vector< T
 }
 
 
+//when using dyanmic vector we don't need an eigen alocator
+template<class T>
+std::vector< T > eigen2vec( const Eigen::Matrix<T, Eigen::Dynamic, 1>& eigen )
+{
+    std::vector< T > std_vec(eigen.rows());
+
+    for (int i = 0; i < eigen.rows(); ++i) {
+        std_vec[i] =  eigen(i);
+    }
+
+    return std_vec;
+
+}
+
+
 //filters the rows of an eigen matrix and returns only those for which the mask is equal to the keep
 template <class T>
 inline T filter_impl(std::vector<int>&indirection, std::vector<int>&inverse_indirection, const T& eigen_mat, const std::vector<bool> mask, const bool keep, const bool do_checks ){
