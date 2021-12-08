@@ -122,7 +122,7 @@ public:
         return m_magma_colormap.row(static_cast<size_t>(std::round(x_clamped * 255.0)));
     }
 
-    Eigen::MatrixXf magma_colormap(){
+    Eigen::MatrixXf magma_colormap() const{
         return m_magma_colormap;
     }
 
@@ -131,7 +131,7 @@ public:
         return m_plasma_colormap.row(static_cast<size_t>(std::round(x_clamped * 255.0)));
     }
 
-    Eigen::MatrixXf plasma_colormap(){
+    Eigen::MatrixXf plasma_colormap() const{
         return m_plasma_colormap;
     }
 
@@ -140,8 +140,17 @@ public:
         return m_viridis_colormap.row(static_cast<size_t>(std::round(x_clamped * 255.0)));
     }
 
-    Eigen::MatrixXf viridis_colormap(){
+    Eigen::MatrixXf viridis_colormap() const{
         return m_viridis_colormap;
+    }
+
+    Eigen::MatrixXf colormap( const int & idx ) const {
+        switch (idx){
+            case 1: return viridis_colormap(); break;
+            case 2: return magma_colormap(); break;
+            default:
+            case 0: return plasma_colormap(); break;
+        }
     }
 
     //convenience functions to color a mat into color
