@@ -8,7 +8,7 @@ namespace utils{
 
 // mostly code modified from Sophus
 
-Eigen::Matrix3d SophusSO3hat ( const Eigen::Vector3d & omega )
+inline Eigen::Matrix3d SophusSO3hat ( const Eigen::Vector3d & omega )
 {
     Eigen::Matrix3d Omega;
     // clang-format off
@@ -20,7 +20,7 @@ Eigen::Matrix3d SophusSO3hat ( const Eigen::Vector3d & omega )
     return Omega;
 }
 
-Eigen::Matrix3d SophusSO3expAndTheta ( const Eigen::Vector3d & omega, double * theta )
+inline Eigen::Matrix3d SophusSO3expAndTheta ( const Eigen::Vector3d & omega, double * theta )
 {
     const double const_eps = 1e-10;
     using std::abs;
@@ -55,7 +55,7 @@ Eigen::Matrix3d SophusSO3expAndTheta ( const Eigen::Vector3d & omega, double * t
     return q.toRotationMatrix();
 }
 
-Eigen::Affine3d SophusExp ( const Eigen::Matrix<double,6,1> & a )
+inline Eigen::Affine3d SophusExp ( const Eigen::Matrix<double,6,1> & a )
 {
     const double const_eps = 1e-10;
     using std::cos;
@@ -83,7 +83,7 @@ Eigen::Affine3d SophusExp ( const Eigen::Matrix<double,6,1> & a )
     return res;
 }
 
-Eigen::Matrix<double,6,1> SophusLog ( const Eigen::Affine3d & e )
+inline Eigen::Matrix<double,6,1> SophusLog ( const Eigen::Affine3d & e )
 {
     if ( e.matrix().isApprox(Eigen::Matrix4d::Identity(),1e-6) )
         return Eigen::Matrix<double,6,1>::Zero();
@@ -108,10 +108,18 @@ Eigen::Matrix<double,6,1> SophusLog ( const Eigen::Affine3d & e )
     return delta;
 }
 
-Eigen::Affine3d interpolateSE3 ( const Eigen::Affine3d & a, const Eigen::Affine3d & b, const double & t )
+inline Eigen::Affine3d interpolateSE3 ( const Eigen::Affine3d & a, const Eigen::Affine3d & b, const double & t )
 {
-    const double inter_t = std::min(1.,std::max(0.,t));
-    return a * SophusExp(inter_t * SophusLog(a.inverse()*b));
+    //const double inter_t = std::min(1.,std::max(0.,t));
+    if ( t <= 0. ) return a;
+    //if ( t >= 1. ) return b;
+    return a * SophusExp(t * SophusLog(a.inverse()*b));
+}
+inline Eigen::Affine3d interpolateSE3AtId ( const Eigen::Affine3d & b, const double & t )
+{
+    if ( t <= 0. ) return Eigen::Affine3d::Identity();
+    //if ( t >= 1. ) return b;
+    return SophusExp(t * SophusLog(b));
 }
 } //namespace utils
 } //namespace radu
