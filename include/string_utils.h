@@ -6,6 +6,8 @@
 #include <fstream>
 #include <iterator>
 #include <sstream>
+#include <stdexcept>
+
 
 
 // //loguru
@@ -140,7 +142,8 @@ std::string format_with_commas(T value) {
 inline std::string file_to_string (const std::string &filename){
     std::ifstream t(filename);
     if (!t.is_open()){
-        LOG(FATAL) << "Cannot open file " << filename;
+        // LOG(FATAL) << "Cannot open file " << filename;
+        throw std::runtime_error( "Cannot open file " + filename );
     }
     return std::string((std::istreambuf_iterator<char>(t)), std::istreambuf_iterator<char>());
 }
