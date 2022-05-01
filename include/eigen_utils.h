@@ -469,13 +469,13 @@ inline Eigen::Matrix< T, Eigen::Dynamic, 1 >  K_matrix2vec(const Eigen::Matrix<T
 template <typename T, int R, int C>
 inline void  tokens2matrix(const std::vector<std::string> tokens, Eigen::Matrix<T,R,C>& matrix, bool rowmajor=true){
 
-    int matrix_size=matrix.rows()*matrix.cols();
+    size_t matrix_size=matrix.rows()*matrix.cols();
     CHECK(matrix_size==tokens.size()) << "The nr of tokens does not correspond to the matrix size. Tokens has size " << tokens.size() << " matrix has rows and cols " << matrix.rows() <<" x " << matrix.cols();
 
 
     //get the tokens into an vector;
     std::vector<T> array;
-    for(int i=0;i<tokens.size();i++){
+    for(size_t i=0;i<tokens.size();i++){
         array.push_back( std::stod(tokens[i]) );
     }
 
@@ -492,12 +492,12 @@ inline void  tokens2matrix(const std::vector<std::string> tokens, Eigen::Matrix<
 template <typename T>
 inline void  tokens2matrix(const std::vector<std::string> tokens, Eigen::Matrix<T,Eigen::Dynamic,1>& matrix ){
 
-    int matrix_size=matrix.rows()*matrix.cols();
+    size_t matrix_size=matrix.rows()*matrix.cols();
     CHECK(matrix_size==tokens.size()) << "The nr of tokens does not correspond to the matrix size. Tokens has size " << tokens.size() << " matrix has rows and cols " << matrix.rows() <<" x " << matrix.cols();
 
     //get the tokens into an vector;
     std::vector<T> array;
-    for(int i=0;i<tokens.size();i++){
+    for(size_t i=0;i<tokens.size();i++){
         array.push_back( std::stod(tokens[i]) );
     }
 
