@@ -218,6 +218,44 @@ public:
 
     }
 
+    Eigen::MatrixXd eigen2color(const Eigen::VectorXd& eigen_vec, const std::string color_type){
+
+        //check if the color type is known
+        if (color_type=="magma" || color_type=="plasma" || color_type=="viridis"){
+            //all good
+        }else{
+            throw std::runtime_error("Color type not known");
+        }
+
+        Eigen::MatrixXd colored;
+        colored.resize(eigen_vec.size(), 3);
+
+
+        for(int i=0; i<eigen_vec.size(); i++){
+            float val = eigen_vec(i);
+
+            Eigen::Vector3f color;
+            if (color_type=="magma"){
+                color=magma_color(val);
+            }else if(color_type=="plasma"){
+                color=plasma_color(val);
+            }else if(color_type=="viridis"){
+                color=viridis_color(val);
+            }
+
+           
+            colored(i,0) = color.x();
+            colored(i,1) = color.y();
+            colored(i,2) = color.z();
+            
+
+        }
+
+
+        return colored;
+
+    }
+
 
     ColorMngr(){
         m_magma_colormap.resize(256,3);
