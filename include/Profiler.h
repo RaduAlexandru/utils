@@ -257,7 +257,7 @@ public:
         for (size_t i = 0; i < m_ordered_timers.size(); i++) {
             std::string name=m_ordered_timers[i];
             // std::cout << "\t name: " << name << m_stats[name] << std::endl;
-            std::cout << boost::format("name: %-20s") % name << m_stats[name] << std::endl;
+            std::cout << boost::format("name: %-30s") % name << m_stats[name] << std::endl;
         }
     }
 
