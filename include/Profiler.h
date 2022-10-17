@@ -274,6 +274,16 @@ public:
     static std::unordered_map<std::string, Stats > stats(){
         return m_stats;
     }
+    static double get_elapsed_ms(const std::string timer_name){
+        std::lock_guard<std::mutex> lock(m_update_mutex);
+        double elapsed_ms=m_timers[timer_name].elapsed_ms();
+        return elapsed_ms;
+    }
+    static double get_elapsed_ns(const std::string timer_name){
+        std::lock_guard<std::mutex> lock(m_update_mutex);
+        double elapsed_ns=m_timers[timer_name].elapsed_ns();
+        return elapsed_ns;
+    }
 
 
 private:
