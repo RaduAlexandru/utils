@@ -284,6 +284,13 @@ public:
         double elapsed_ns=m_timers[timer_name].elapsed_ns();
         return elapsed_ns;
     }
+    static void clear(){
+        std::lock_guard<std::mutex> lock(m_update_mutex);
+        m_timings.clear();
+        m_timers.clear();
+        m_ordered_timers.clear();
+        m_stats.clear();
+    }
 
 
 private:
