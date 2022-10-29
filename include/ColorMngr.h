@@ -116,10 +116,26 @@ inline Eigen::Vector3d hsv2rgb(const Eigen::Vector3d& hsv){
 class ColorMngr{
 public:
 
+    //given a value from 01, intepolates the color from a certain colormap
+    Eigen::Vector3f interpolate_color(const float x, Eigen::MatrixXf& colormap){
+
+        int nr_colors=colormap.rows();
+        float x_clamped = std::max(0.0f, std::min(1.0f, x));
+        x_clamped=x_clamped*(nr_colors-1);
+
+        int idx_0=std::floor(x_clamped);
+        int idx_1=std::ceil(x_clamped);
+        const double t  = x_clamped - idx_0;
+
+        Eigen::Vector3f c0 = colormap.row(idx_0);
+        Eigen::Vector3f c1 = colormap.row(idx_1);
+
+        return (1.0 - t) * c0 + t * c1;
+
+    }
 
     Eigen::Vector3f magma_color(const float x){
-        float x_clamped = std::max(0.0f, std::min(1.0f, x));
-        return m_magma_colormap.row(static_cast<size_t>(std::round(x_clamped * 255.0)));
+        return interpolate_color(x, m_magma_colormap); 
     }
 
     Eigen::MatrixXf magma_colormap() const{
@@ -127,8 +143,7 @@ public:
     }
 
     Eigen::Vector3f plasma_color(const float x){
-        float x_clamped = std::max(0.0f, std::min(1.0f, x));
-        return m_plasma_colormap.row(static_cast<size_t>(std::round(x_clamped * 255.0)));
+        return interpolate_color(x, m_plasma_colormap); 
     }
 
     Eigen::MatrixXf plasma_colormap() const{
@@ -136,8 +151,11 @@ public:
     }
 
     Eigen::Vector3f viridis_color(const float x){
-        float x_clamped = std::max(0.0f, std::min(1.0f, x));
-        return m_viridis_colormap.row(static_cast<size_t>(std::round(x_clamped * 255.0)));
+        return interpolate_color(x, m_viridis_colormap); 
+    }
+
+    Eigen::Vector3f pubu_color(const float x){
+        return interpolate_color(x, m_pubu_colormap)/255.0; 
     }
 
     Eigen::MatrixXf viridis_colormap() const{
@@ -221,7 +239,7 @@ public:
     Eigen::MatrixXd eigen2color(const Eigen::VectorXd& eigen_vec, const std::string color_type){
 
         //check if the color type is known
-        if (color_type=="magma" || color_type=="plasma" || color_type=="viridis"){
+        if (color_type=="magma" || color_type=="plasma" || color_type=="viridis" || color_type=="pubu"){
             //all good
         }else{
             throw std::runtime_error("Color type not known");
@@ -241,6 +259,8 @@ public:
                 color=plasma_color(val);
             }else if(color_type=="viridis"){
                 color=viridis_color(val);
+            }else if(color_type=="pubu"){
+                color=pubu_color(val);
             }
 
            
@@ -1037,12 +1057,27 @@ public:
              0.983868, 0.904867, 0.136897 ,
              0.993248, 0.906157, 0.143936
         ;
+
+
+        //https://github.com/jgreitemann/colormap/blob/master/include/colormap/palettes.hpp
+        m_pubu_colormap.resize(8,3);
+        m_pubu_colormap << 
+            0xff, 0xf7, 0xfb,
+            0xec, 0xe7, 0xf2,
+            0xd0, 0xd1, 0xe6,
+            0xa6, 0xbd, 0xdb,
+            0x74, 0xa9, 0xcf,
+            0x36, 0x90, 0xc0,
+            0x05, 0x70, 0xb0,
+            0x03, 0x4e, 0x7b
+            ;
     }
 
 private:
     Eigen::MatrixXf m_magma_colormap;
     Eigen::MatrixXf m_plasma_colormap;
     Eigen::MatrixXf m_viridis_colormap;
+    Eigen::MatrixXf m_pubu_colormap;
 
 };
 
