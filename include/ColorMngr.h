@@ -207,6 +207,7 @@ public:
                 float val = to_convert.at<float>(i,j);
 
                 Eigen::Vector3f color;
+                color.setZero();
                 if (color_type=="magma"){
                     color=magma_color(val);
                 }else if(color_type=="plasma"){
@@ -253,6 +254,7 @@ public:
             float val = eigen_vec(i);
 
             Eigen::Vector3f color;
+            color.setZero();
             if (color_type=="magma"){
                 color=magma_color(val);
             }else if(color_type=="plasma"){
