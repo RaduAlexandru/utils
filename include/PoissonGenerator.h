@@ -66,7 +66,10 @@ public:
 		seed_ *= 521167;
 		uint32_t a = (seed_ & 0x007fffff) | 0x40000000;
 		// remap to 0..1
-		return 0.5f * (*((float*)&a) - 2.0f);
+		#pragma GCC diagnostic push
+		#pragma GCC diagnostic ignored "-Wstrict-aliasing"
+			return 0.5f * (*((float*)&a) - 2.0f);
+		#pragma GCC diagnostic pop
 	}
 	inline uint32_t randomInt(uint32_t maxInt)
 	{
